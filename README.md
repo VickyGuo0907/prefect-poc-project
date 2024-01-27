@@ -33,7 +33,6 @@ you could easily run deployment through UI Deployment page.
 * You could run the deployment use CLI
 ```commandline
 prefect deployment run 'user_api_workflow_test/user_api_workflow'
-
 ```
 **Please check Prefect doc to get more details. [Deployment](https://docs.prefect.io/latest/tutorial/deployments/)**
 
