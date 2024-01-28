@@ -7,9 +7,7 @@ TEST_RESULTS = []
 TEST_CASE_FILE_PATH = "../test_case/user_test_case.yaml"
 
 
-@flow(
-    name="user_api_workflow_test", log_prints=True, task_runner=SequentialTaskRunner()
-)
+@flow(name="user_api_workflow_test", log_prints=True, task_runner=SequentialTaskRunner())
 def user_api_workflow_test():
     print("Start test user API workflow ")
     # Read test case configuration file
