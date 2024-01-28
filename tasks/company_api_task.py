@@ -3,7 +3,6 @@ import requests
 import requests.auth
 from prefect import task, get_run_logger
 
-
 COMPANY_API_URL = "https://api.company.com/"
 
 
@@ -47,7 +46,8 @@ def create_company_task(api_token: str, company_id: str, company_data: dict) -> 
 
                        }
     try:
-        response = requests.post(COMPANY_API_URL, headers=request_headers, params={"company_id": company_id}, json=company_data)
+        response = requests.post(COMPANY_API_URL, headers=request_headers, params={
+            "company_id": company_id}, json=company_data)
         dict_result["status_code"] = response.status_code
         dict_result["result"] = json.loads(response.content)
 
@@ -76,7 +76,8 @@ def update_company_task(api_token: str, company_id: str, company_data: dict) -> 
 
                        }
     try:
-        response = requests.patch(COMPANY_API_URL, headers=request_headers, params={"company_id": company_id}, json=company_data)
+        response = requests.patch(COMPANY_API_URL, headers=request_headers, params={
+            "company_id": company_id}, json=company_data)
         dict_result["status_code"] = response.status_code
         dict_result["result"] = json.loads(response.content)
 
@@ -114,5 +115,3 @@ def delete_company_task(api_token: str, company_id: str) -> dict:
         logger.error("delete_company_task failed, error: %s", err)
 
     return dict_result
-
-

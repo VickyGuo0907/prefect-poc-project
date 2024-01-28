@@ -1,5 +1,4 @@
 import json
-
 import yaml
 from prefect.artifacts import create_table_artifact, create_markdown_artifact
 from pathlib import Path
@@ -13,7 +12,7 @@ def get_test_case_config_info(test_case_file_path: str) -> dict:
     """
     dict_test_config_info = {}
     try:
-        with open(test_case_file_path, 'r') as file:
+        with open(test_case_file_path, 'r'):
             dict_test_config_info = yaml.safe_load(Path(test_case_file_path).read_text())
     except Exception as err:
         print(f"failed to get test configuration info, detail error: ", err)
@@ -36,7 +35,6 @@ def get_json_data(file_path: str):
 
 
 def create_result_artifact_table(workflow_title: str, test_case_id: str, result_data: list):
-
     create_table_artifact(
         key="test-result-report",
         table=result_data,

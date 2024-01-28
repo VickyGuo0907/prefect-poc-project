@@ -117,7 +117,7 @@ def import_user_from_csv(api_token: str, import_file_path: str, query_data: str)
     try:
         import_file = {'file': (import_file_path, open(import_file_path, 'rb'), 'text/csv')}
         response = requests.post(SAMPLE_USER_API_URL + "/import", headers=request_headers, params=query_data,
-            files=import_file)
+                                 files=import_file)
 
         dict_result["status_code"] = response.status_code
         dict_result["result"] = json.loads(response.content)
