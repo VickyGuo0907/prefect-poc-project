@@ -1,7 +1,9 @@
 # Prefect POC project 
 
-This is sample project to present how to use Prefect Orchestration tool to do API-Level Testing and End-To-End
+This is a sample project to present how to use Prefect Orchestration tool to do API-Level Testing and End-To-End
 integration testing. 
+
+[Published Medium Story](https://medium.com/@vicky.guo97/test-and-validate-data-pipelines-workflows-with-prefect-cc24bb557571)
 
 ## Installation 
 
