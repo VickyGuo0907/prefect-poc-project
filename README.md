@@ -51,7 +51,7 @@ Below is detail explain of source code structure (Under construction):
 │   ├── user_api_workflow.py      # Sample User api tasks (API entry points)
 ├── test_case         # Test Case scenarios yaml file folder 
 │   ├── user_test_case.yaml       # test case configuration file
-└── test_data         # Test Data folder
+├── test_data         # Test Data folder
 │   ├── new_user_1.json      # test case configuration file
 │   ├── ...
 ├── prefect-server  # prefect server folder
