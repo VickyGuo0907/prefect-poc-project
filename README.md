@@ -54,6 +54,9 @@ Below is detail explain of source code structure (Under construction):
 └── test_data         # Test Data folder
 │   ├── new_user_1.json      # test case configuration file
 │   ├── ...
+├── prefect-server  # prefect server folder
+│   ├── docker-compose.yml      # perfect server docker compose file
+├── Dockerfile        # Schedule run docker file
 ├── README.md 
 ├── requirements.txt      # Python packages
 └── utility.py              # Common Utility functions

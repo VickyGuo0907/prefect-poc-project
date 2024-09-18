@@ -1,0 +1,60 @@
+# generic metadata
+prefect-version: 3.0.2
+name: prefect-test-schedule-pool-100
+
+# schedule_pool_100.yaml
+version: 1.0.0
+
+# preparation steps
+build: null
+push: null
+
+# runtime steps
+pull:
+- prefect.deployments.steps.git_clone:
+    repository: https://github.com/VickyGuo0907/prefect-poc-project.git
+    branch: main
+    credentials: '{{ prefect.blocks.github-credentials.my-github-credentials }}'
+- prefect.deployments.steps.set_working_directory:
+    directory: /home/prefect-poc-project
+
+# work_pool definition with job_variables
+definitions:
+    work-pools:
+        schedule_pool_100: &schedule_pool_100
+        name: schedule_pool_100
+        work_queue_name: default
+        type: docker
+        job_variables:
+            IMAGE: schedule_prefect_image_base
+            env:
+                ENV_NAME: prefect-test-schedule-pool-100
+                ENV_ENTRY_URL: http://server:8000
+                ENV_USERNAME: admin
+                ENV_PASSWORD: admin123
+                TEST_ENV_VERSION: 1.0.0
+
+flows:
+    user_api_workflow:
+        name: user_api_workflow
+    parallel_flow:
+        name: parallel_flow
+
+# deployment configurations
+deployments:
+- name: user_api_workflow_schedule_pool_100
+  flow: user_api_workflow
+  entrypoint: flows/user_api_workflow.py:user_api_workflow_test
+  description: this tests case would be test user api
+  parameters: {}
+  schedules:
+      - cron: '0 8 * * *' # Core expression to run at 8:00 AM every day
+        timezone: "America/New_York" #timezone of the cron expression
+        active: true
+  # infra-specific fields
+  work_pool: *schedule_pool_100
+  version: null
+  tags:
+  - schedule-pool-100
+  - '100'
+

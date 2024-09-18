@@ -1,4 +1,4 @@
-from prefect import flow, task, serve
+from prefect import flow
 from prefect.task_runners import SequentialTaskRunner
 import utility
 from tasks import user_api_task
