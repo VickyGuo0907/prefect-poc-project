@@ -11,10 +11,10 @@ push: null
 
 # runtime steps
 pull:
-- prefect.deployments.steps.git_clone:
-    repository: https://github.com/VickyGuo0907/prefect-poc-project.git
-    branch: main
-    credentials: '{{ prefect.blocks.github-credentials.my-github-credentials }}'
+#- prefect.deployments.steps.git_clone:
+#    repository: https://github.com/VickyGuo0907/prefect-poc-project.git
+#    branch: main
+#    credentials: '{{ prefect.blocks.github-credentials.my-github-credentials }}'
 - prefect.deployments.steps.set_working_directory:
     directory: /home/prefect-poc-project
 
@@ -49,6 +49,21 @@ deployments:
   parameters: {}
   schedules:
       - cron: '0 8 * * *' # Core expression to run at 8:00 AM every day
+        timezone: "America/New_York" #timezone of the cron expression
+        active: true
+  # infra-specific fields
+  work_pool: *schedule_pool_100
+  version: null
+  tags:
+  - schedule-pool-100
+  - '100'
+- name: parallel_flow_schedule_pool_100
+  flow: parallel_flow
+  entrypoint: flows/parallel_flow.py:workflow_with_parallel_tasks
+  description: this tests case would be test user api
+  parameters: {}
+  schedules:
+      - cron: '10 8 * * *' # Core expression to run at 8:10 AM every day
         timezone: "America/New_York" #timezone of the cron expression
         active: true
   # infra-specific fields

@@ -1,6 +1,5 @@
 import json
-import requests
-import requests.auth
+from utils import request_client
 from prefect import task, get_run_logger
 
 SAMPLE_USER_API_URL = "https://jsonplaceholder.typicode.com/posts"
@@ -16,7 +15,8 @@ def get_user_task(user_id: str) -> dict:
     dict_result = {}
     request_headers = {"content-type": "application/json"}
     try:
-        response = requests.get(SAMPLE_USER_API_URL + f"/{user_id}", headers=request_headers)
+        get_client = request_client.GetRequest(SAMPLE_USER_API_URL, timeout=10)
+        response = get_client.send_request(f"/{user_id}", headers=request_headers)
         dict_result["status_code"] = response.status_code
         dict_result["result"] = json.loads(response.content)
         if response.status_code != 200:
@@ -39,7 +39,8 @@ def create_user_task(user_data: dict) -> dict:
     dict_result = {}
     request_headers = {"content-type": "application/json;charset=UTF-8"}
     try:
-        response = requests.post(SAMPLE_USER_API_URL, headers=request_headers, json=user_data)
+        post_client = request_client.PostRequest(SAMPLE_USER_API_URL, timeout=10)
+        response = post_client.send_request(headers=request_headers, json=user_data)
         dict_result["status_code"] = response.status_code
         dict_result["result"] = json.loads(response.content)
 
@@ -64,7 +65,8 @@ def update_user_task(user_id: str, user_data: dict) -> dict:
     dict_result = {}
     request_headers = {"content-type": "application/json"}
     try:
-        response = requests.patch(SAMPLE_USER_API_URL + f"/{user_id}", headers=request_headers, json=user_data)
+        patch_client = request_client.PatchRequest(SAMPLE_USER_API_URL, timeout=10)
+        response = patch_client.send_request(f"/{user_id}", headers=request_headers, json=user_data)
         dict_result["status_code"] = response.status_code
         dict_result["result"] = json.loads(response.content)
 
@@ -87,7 +89,8 @@ def delete_user_task(user_id: str) -> dict:
     dict_result = {}
     request_headers = {"content-type": "application/json"}
     try:
-        response = requests.delete(SAMPLE_USER_API_URL + f"/{user_id}", headers=request_headers)
+        delete_client = request_client.DeleteRequest(SAMPLE_USER_API_URL, timeout=10)
+        response = delete_client.send_request(f"/{user_id}", headers=request_headers)
         dict_result["status_code"] = response.status_code
         if response.status_code == 200:
             dict_result["result"] = "Success"
@@ -116,7 +119,8 @@ def import_user_from_csv(api_token: str, import_file_path: str, query_data: str)
                        "content-type": "application/json"}
     try:
         import_file = {'file': (import_file_path, open(import_file_path, 'rb'), 'text/csv')}
-        response = requests.post(SAMPLE_USER_API_URL + "/import", headers=request_headers, params=query_data,
+        post_client = request_client.PostRequest(SAMPLE_USER_API_URL + "/import", timeout=10)
+        response = post_client.send_request(headers=request_headers, params=query_data,
                                  files=import_file)
 
         dict_result["status_code"] = response.status_code

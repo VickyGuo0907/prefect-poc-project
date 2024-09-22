@@ -1,0 +1,43 @@
+pipeline {
+    agent {
+        node {
+            label: 'prefect-automation-test'
+            customWorkspace: '/root/workspace/prefect-automation-test'
+        }
+    }
+    environment {
+        PREFECT_API_URL = 'http://XX.XX.XX.XX:4200/api'
+        PREFECT_WORK_POOL_NAME = 'ci_cd_automation_pool' // work pool name
+        VENV_DIR = 'prefect_venv' // virtual environment directory
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/vickyguo0907/prefect-poc-project.git', branch: 'main',
+                credentialsId: 'XXXXXXXXXX'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                // install required dependencies
+                echo 'Setting up Python 3.12 environment'
+                sh '''
+                    python3.12 -m venv $VENV_DIR
+                    source $VENV_DIR/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
+            }
+        }
+        stage('Create Work Pool Agent') {
+            steps {
+                // create work pool agent
+                echo 'Creating Work Pool Agent'
+                sh '''
+                    source $VENV_DIR/bin/activate
+                    prefect agent create --work-pool $PREFECT_WORK_POOL_NAME --type process
+                    prefect deploy --profile-file ./automation_pool.yaml --all
+                '''
+            }
+        }
+    }}

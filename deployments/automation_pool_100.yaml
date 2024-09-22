@@ -1,0 +1,75 @@
+# generic metadata
+prefect-version: 3.0.2
+name: prefect-test-automation-pool-100
+
+# automation_pool_100.yaml
+version: 1.0.0
+
+# preparation steps
+build: null
+push: null
+
+# runtime steps
+pull:
+- prefect.deployments.steps.git_clone:
+    repository: https://github.com/VickyGuo0907/prefect-poc-project.git
+    branch: main
+    credentials: '{{ prefect.blocks.github-credentials.my-github-credentials }}'
+#- prefect.deployments.steps.set_working_directory:
+#    directory: /home/prefect-poc-project
+
+# work_pool definition with job_variables
+definitions:
+    work-pools:
+        automation_pool_100: &automation_pool_100
+        name: automation_pool_100
+        work_queue_name: default
+        type: process
+        # Variables in Jenksins Job configuration
+        job_variables:
+            env:
+                ENV_NAME: prefect-test-automation-pool-100
+                ENV_ENTRY_URL: "{{ $ENV_ENTRY_URL }}"
+                ENV_USERNAME: "{{ $ENV_USERNAME }}"
+                ENV_PASSWORD: "{{ $ENV_PASSWORD }}"
+                TEST_ENV_VERSION: "{{ $TEST_ENV_VERSION }}"
+
+flows:
+    user_api_workflow:
+        name: user_api_workflow
+    parallel_flow:
+        name: parallel_flow
+
+# deployment configurations
+deployments:
+- name: user_api_workflow_automation_pool_100
+  flow: user_api_workflow
+  entrypoint: flows/user_api_workflow.py:user_api_workflow_test
+  description: this tests case would be test user api
+  parameters: {}
+  automations:
+      - cron: '0 8 * * *' # Core expression to run at 8:00 AM every day
+        timezone: "America/New_York" #timezone of the cron expression
+        active: true
+  # infra-specific fields
+  work_pool: *automation_pool_100
+  version: null
+  tags:
+  - automation-pool-100
+  - '100'
+- name: parallel_flow_automation_pool_100
+  flow: parallel_flow
+  entrypoint: flows/parallel_flow.py:workflow_with_parallel_tasks
+  description: this tests case would be test user api
+  parameters: {}
+  automations:
+      - cron: '10 8 * * *' # Core expression to run at 8:10 AM every day
+        timezone: "America/New_York" #timezone of the cron expression
+        active: true
+  # infra-specific fields
+  work_pool: *automation_pool_100
+  version: null
+  tags:
+  - automation-pool-100
+  - '100'
+

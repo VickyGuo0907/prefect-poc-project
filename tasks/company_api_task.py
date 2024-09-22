@@ -1,9 +1,9 @@
 import json
-import requests
-import requests.auth
+from partd.file import token
+from utils import request_client
 from prefect import task, get_run_logger
 
-COMPANY_API_URL = "https://api.company.com/"
+COMPANY_BASE_API_URL = "https://api.company.com/"
 
 
 @task(name="get_company_task", description="get company information", log_prints=True)
@@ -15,10 +15,11 @@ def get_company_task(api_token: str, company_id: str) -> dict:
     """
     logger = get_run_logger()
     dict_result = {}
-    request_headers = {"Authorization": f"Bearer {api_token}",
-                       "content-type": "application/json"}
+    request_header = {"Authorization": f"Bearer {api_token}",
+                      "content-type": "application/json"}
     try:
-        response = requests.get(COMPANY_API_URL, headers=request_headers, params={"company_id": company_id})
+        get_client = request_client.GetRequest(COMPANY_BASE_API_URL, token=api_token, timeout=10)
+        response = get_client.send_request("/", params={"company_id": company_id}, headers=request_header)
         dict_result["status_code"] = response.status_code
         dict_result["result"] = json.loads(response.content)
         if response.status_code != 200:
@@ -43,11 +44,11 @@ def create_company_task(api_token: str, company_id: str, company_data: dict) -> 
     dict_result = {}
     request_headers = {"Authorization": f"Bearer {api_token}",
                        "content-type": "application/json"
-
                        }
     try:
-        response = requests.post(COMPANY_API_URL, headers=request_headers, params={
-            "company_id": company_id}, json=company_data)
+        post_client = request_client.PostRequest(COMPANY_BASE_API_URL, token=api_token, timeout=10)
+        response = post_client.send_request("/", params={
+            "company_id": company_id}, headers=request_headers, json=company_data)
         dict_result["status_code"] = response.status_code
         dict_result["result"] = json.loads(response.content)
 
@@ -73,11 +74,10 @@ def update_company_task(api_token: str, company_id: str, company_data: dict) -> 
     dict_result = {}
     request_headers = {"Authorization": f"Bearer {api_token}",
                        "content-type": "application/json"
-
                        }
     try:
-        response = requests.patch(COMPANY_API_URL, headers=request_headers, params={
-            "company_id": company_id}, json=company_data)
+        patch_client = request_client.PatchRequest(COMPANY_BASE_API_URL, token=api_token, timeout=10)
+        response = patch_client.send_request("/", params={"company_id": company_id},headers=request_headers, json=company_data)
         dict_result["status_code"] = response.status_code
         dict_result["result"] = json.loads(response.content)
 
@@ -102,7 +102,8 @@ def delete_company_task(api_token: str, company_id: str) -> dict:
     request_headers = {"Authorization": f"Bearer {api_token}",
                        "content-type": "application/json"}
     try:
-        response = requests.delete(COMPANY_API_URL, headers=request_headers, params={"company_id": company_id})
+        delete_client = request_client.DeleteRequest(COMPANY_BASE_API_URL, token=api_token, timeout=10)
+        response = delete_client.send_request("/", params={"company_id": company_id}, headers=request_headers)
         dict_result["status_code"] = response.status_code
         if response.status_code == 200:
             dict_result["result"] = "Success"

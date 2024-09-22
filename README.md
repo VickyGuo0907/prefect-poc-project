@@ -28,7 +28,32 @@ prefect start serve
 ```
 dashboard at [http://127.0.0.1:4200](http://127.0.0.1:4200)
 
+## Prefect Profile Configuration
+Prefect  allow you to customize your profile, which could include both local or remote, testing, staging and production.
+
+Please check file `setup_local_env.sh` for more details. 
+
+* Prefect Profile CLI 
+
+
 ## Deployment
+
+### Schedule Long Running Pool Deployment
+
+```commandline
+podman build -t schedule_prefect_image_base .
+podman run --name schedule_pool_container_100 schedule_prefect_image_base -d schedule_prefect_image_base "100"
+podman run --name schedule_pool_container_100 schedule_prefect_image_base -d schedule_prefect_image_base "200"
+```
+
+### Automation Pool Deployment
+```commandline
+# Run Automation Pool
+prefect work-pool create automation_pool_100 --type process
+prefect deploy --profile-file  "./automation_pool_100.yaml" --all
+prefect worker start --pool "automation_pool_100"
+```
+
 * with 'flow.serve' method used in flow code, it will create a deployment right way, 
 you could easily run deployment through UI Deployment page. 
 
@@ -43,6 +68,17 @@ prefect deployment run 'user_api_workflow_test/user_api_workflow'
 Below is detail explain of source code structure (Under construction):
 ```bash
 .
+├── deployments              # Deployment configuration folder
+│   ├── prefect-server        # prefect server deployment configuration file
+│   │   ├── docker-compose.yml      # prefect server docker compose file
+│   │   ├── setup_local_env.sh      # Prefect Profile Configuration
+│   ├── automation_pool_100.yaml       # automation Deployment configuration file
+│   ├── deployment_schedule.sh       # Deployment configuration file
+│   ├── Dockerfile        # Schedule run docker configuration file
+│   ├── Jenkinsfile        # Jenkins pipeline file sample
+│   ├── schedule_pool_100.yaml       # schedule Deployment configuration file
+│   ├── schedule_pool_200.yaml       # schedule Deployment configuration file
+│   ├── ...      # schedule Deployment configuration file for more pool
 ├── flows              # Sample flows folder
 │   ├── parallel_flow.py       # Cams related like assets, assets type, catalogs... 
 │   ├── user_api_workflow.py   # user API workflow sample    
@@ -54,9 +90,7 @@ Below is detail explain of source code structure (Under construction):
 ├── test_data         # Test Data folder
 │   ├── new_user_1.json      # test case configuration file
 │   ├── ...
-├── prefect-server  # prefect server folder
-│   ├── docker-compose.yml      # perfect server docker compose file
-├── Dockerfile        # Schedule run docker file
+
 ├── README.md 
 ├── requirements.txt      # Python packages
 └── utility.py              # Common Utility functions
