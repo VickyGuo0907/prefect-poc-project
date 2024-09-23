@@ -1,5 +1,4 @@
 import json
-from partd.file import token
 from utils import request_client
 from prefect import task, get_run_logger
 
