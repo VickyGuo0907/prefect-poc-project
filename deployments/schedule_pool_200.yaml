@@ -16,7 +16,7 @@ pull:
 #    branch: main
 #    credentials: '{{ prefect.blocks.github-credentials.my-github-credentials }}'
 - prefect.deployments.steps.set_working_directory:
-    directory: /home/prefect-poc-project
+    directory: /home/prefect-poc-project/
 
 # work_pool definition with job_variables
 definitions:
@@ -53,7 +53,7 @@ deployments:
         active: true
   # infra-specific fields
   work_pool: *schedule_pool_200
-  version:
+  version: null
   tags:
   - schedule-pool-200
   - '200'
@@ -68,7 +68,7 @@ deployments:
         active: true
   # infra-specific fields
   work_pool: *schedule_pool_200
-  version:
+  version: null
   tags:
   - schedule-pool-200
   - '200'
