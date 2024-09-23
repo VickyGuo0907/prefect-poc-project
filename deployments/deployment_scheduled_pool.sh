@@ -15,7 +15,7 @@ echo "Running version: $VERSION with config file: $CONFIG_FILE_PATH"
 
 # Run Schedule Pool
 prefect work-pool create "$WORK_POOL_NAME" --type process
-prefect deploy --profile-file  "$CONFIG_FILE_PATH" --all
+prefect deploy --prefect-file  "$CONFIG_FILE_PATH" --all
 prefect worker start --pool "$WORK_POOL_NAME"
 
 
