@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r /home/prefect-poc-project/requirements.txt
 RUN chmod +x /home/prefect-poc-project/deployments/deployment_scheduled_pool.sh
 
 # Set the environment variables for prefect server, change API URL to point your Prefect server
-ENV PREFECT_API_URL=http://127.0.0.1:4200/api
+ENV PREFECT_API_URL=http://XX.XX.XX.XX:4200/api
 ENV PREFECT_LOGGING_LEVEL="INFO"
 
 # Run our flow script when the container starts
