@@ -3,7 +3,10 @@
 This is a sample project to present how to use Prefect Orchestration tool to do API-Level Testing and End-To-End
 integration testing. 
 
-[Published Medium Story](https://medium.com/@vicky.guo97/test-and-validate-data-pipelines-workflows-with-prefect-cc24bb557571)
+## Published Medium Story
+* [Test and validate data pipelines workflows with Prefect (1) - Development](https://medium.com/@vicky.guo97/test-and-validate-data-pipelines-workflows-with-prefect-cc24bb557571)
+* [Test and Validate data pipelines/workflows with Prefect (2)- Deployment Strategy](https://medium.com/@vicky.guo97/test-and-validate-data-pipelines-workflows-with-prefect-cc24bb557571)
+
 
 ## Installation 
 
@@ -33,8 +36,6 @@ Prefect  allow you to customize your profile, which could include both local or 
 
 Please check file `setup_local_env.sh` for more details. 
 
-* Prefect Profile CLI 
-
 
 ## Deployment
 
@@ -61,7 +62,9 @@ you could easily run deployment through UI Deployment page.
 ```commandline
 prefect deployment run 'user_api_workflow_test/user_api_workflow'
 ```
-**Please check Prefect doc to get more details. [Deployment](https://docs.prefect.io/latest/tutorial/deployments/)**
+**Please check Prefect doc to get more details. 
+
+[Prefect Deployment Doc](https://docs.prefect.io/latest/tutorial/deployments/)**
 
 ## Source Code Structure  
 
@@ -90,8 +93,9 @@ Below is detail explain of source code structure (Under construction):
 ├── test_data         # Test Data folder
 │   ├── new_user_1.json      # test case configuration file
 │   ├── ...
-
+├── utils         # Utils folder
+│   ├── requests_utils.py      # Common requests utils
+│   ├── utility.py      # Common utility functions
 ├── README.md 
-├── requirements.txt      # Python packages
-└── utility.py              # Common Utility functions
+└── requirements.txt      # Python packages
 ```

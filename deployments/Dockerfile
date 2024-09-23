@@ -12,7 +12,7 @@ WORKDIR /home/prefect-poc-project/
 RUN git clone https://github.com/VickyGuo0907/prefect-poc-project.git ./
 
 # List the contents in container directory
-RUN ls -al /home/prefect-poc-project
+RUN ls -al /home/prefect-poc-project/
 
 # Add our requirements.txt file to the image and install dependencies
 RUN pip install --upgrade pip
@@ -22,4 +22,4 @@ RUN pip install --no-cache-dir -r /home/prefect-poc-project/requirements.txt
 ENV PREFECT_API_URL=http://127.0.0.1:4200/api
 ENV PREFECT_LOGGING_LEVEL="INFO"
 
-ENTRYPOINT ["./deployment_scheduled_pool.sh"]
+ENTRYPOINT ["./deployments/deployment_scheduled_pool.sh"]
