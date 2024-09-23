@@ -44,7 +44,7 @@ flows:
 deployments:
 - name: user_api_workflow_schedule_pool_100
   flow: user_api_workflow
-  entrypoint: flows/user_api_workflow.py:user_api_workflow_test
+  entrypoint: /home/prefect-poc-project/flows/user_api_workflow.py:user_api_workflow_test
   description: this tests case would be test user api
   parameters: {}
   schedules:
@@ -59,7 +59,7 @@ deployments:
   - '100'
 - name: parallel_flow_schedule_pool_100
   flow: parallel_flow
-  entrypoint: flows/parallel_flow.py:workflow_with_parallel_tasks
+  entrypoint: /home/prefect-poc-project/flows/parallel_flow.py:workflow_with_parallel_tasks
   description: this tests case would be test user api
   parameters: {}
   schedules:
