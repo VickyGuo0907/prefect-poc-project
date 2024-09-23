@@ -24,4 +24,6 @@ RUN chmod +x /home/prefect-poc-project/deployments/deployment_scheduled_pool.sh
 ENV PREFECT_API_URL=http://127.0.0.1:4200/api
 ENV PREFECT_LOGGING_LEVEL="INFO"
 
-ENTRYPOINT ["./deployments/deployment_scheduled_pool.sh"]
+# Run our flow script when the container starts
+CMD ["python", "/home/prefect-poc-project/flows/health_check.py"]
+#ENTRYPOINT ["./deployments/deployment_scheduled_pool.sh"]
