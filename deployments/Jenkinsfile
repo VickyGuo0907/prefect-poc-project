@@ -52,9 +52,11 @@ pipeline {
         post {
             always {
                 // clean up virtual environment
-                sh '
-                prefect deployment delete 'user_api_workflow/user_api_workflow_automation_pool_100'
-                prefect work-pool delete $PREFECT_WORK_POOL_NAME
+                sh '''
+                    prefect deployment delete './flows/user_api_workflow/user_api_workflow_automation_pool_100'
+                    prefect deployment delete './flows/parallel_flow/parallel_flow_automation_pool_100'
+                    prefect work-pool delete $PREFECT_WORK_POOL_NAME
+                '''
             }
         }
     }}
