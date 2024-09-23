@@ -22,4 +22,4 @@ RUN pip install --no-cache-dir -r /home/prefect-poc-project/requirements.txt
 ENV PREFECT_API_URL=http://127.0.0.1:4200/api
 ENV PREFECT_LOGGING_LEVEL="INFO"
 
-ENTRYPOINT ["./deployments/deployment_scheduled_pool.sh"]
+ENTRYPOINT ["/home/prefect-poc-project/deployments/deployment_scheduled_pool.sh"]
