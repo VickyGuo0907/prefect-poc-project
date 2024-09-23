@@ -36,8 +36,25 @@ pipeline {
                 sh '''
                     source $VENV_DIR/bin/activate
                     prefect agent create --work-pool $PREFECT_WORK_POOL_NAME --type process
-                    prefect deploy --profile-file ./automation_pool.yaml --all
+                    prefect deploy --prefect-file ./deployments/automation_pool_100.yaml --all
                 '''
+            }
+        }
+        stage('Trigger Prefect Workflow deployment job') {
+            steps {
+                sh '''
+                   prefect deployment run './flows/user_api_workflow/user_api_workflow_automation_pool_100'
+                   prefect deployment run './flows/parallel_flow/parallel_flow_automation_pool_100'
+                   nohup prefect worker start --pool $PREFECT_WORK_POOL_NAME
+                '''
+            }
+        }
+        post {
+            always {
+                // clean up virtual environment
+                sh '
+                prefect deployment delete 'user_api_workflow/user_api_workflow_automation_pool_100'
+                prefect work-pool delete $PREFECT_WORK_POOL_NAME
             }
         }
     }}

@@ -47,7 +47,7 @@ deployments:
   entrypoint: ../flows/user_api_workflow.py:user_api_workflow_test
   description: this tests case would be test user api
   parameters: {}
-  automations:
+  schedules:
       - cron: '0 8 * * *' # Core expression to run at 8:00 AM every day
         timezone: "America/New_York" #timezone of the cron expression
         active: true
@@ -62,7 +62,7 @@ deployments:
   entrypoint: ../flows/parallel_flow.py:workflow_with_parallel_tasks
   description: this tests case would be test user api
   parameters: {}
-  automations:
+  schedules:
       - cron: '10 8 * * *' # Core expression to run at 8:10 AM every day
         timezone: "America/New_York" #timezone of the cron expression
         active: true

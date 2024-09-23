@@ -51,7 +51,7 @@ podman run --name schedule_pool_container_200 -d schedule_prefect_image_base "20
 ```commandline
 # Run Automation Pool
 prefect work-pool create automation_pool_100 --type process
-prefect deploy --profile-file  "./automation_pool_100.yaml" --all
+prefect deploy --prefect-file  "./automation_pool_100.yaml" --all
 prefect worker start --pool "automation_pool_100"
 ```
 
