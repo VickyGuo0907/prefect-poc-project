@@ -8,8 +8,8 @@ fi
 
 VERSION=$1
 
-WORK_POOL_NAME="schedule_pool_$VERSION"
-CONFIG_FILE_PATH="schedule_pool_$VERSION.yaml"
+WORK_POOL_NAME="schedule_pool_"$VERSION
+CONFIG_FILE_PATH="./schedule_pool_"$VERSION".yaml"
 
 echo "Running version: $VERSION with config file: $CONFIG_FILE_PATH"
 

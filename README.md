@@ -43,8 +43,8 @@ Please check file `setup_local_env.sh` for more details.
 
 ```commandline
 podman build -t schedule_prefect_image_base .
-podman run --name schedule_pool_container_100 schedule_prefect_image_base -d schedule_prefect_image_base "100"
-podman run --name schedule_pool_container_100 schedule_prefect_image_base -d schedule_prefect_image_base "200"
+podman run --name schedule_pool_container_100 -d schedule_prefect_image_base "100"
+podman run --name schedule_pool_container_200 -d schedule_prefect_image_base "200"
 ```
 
 ### Automation Pool Deployment
