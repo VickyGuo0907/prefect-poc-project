@@ -21,7 +21,7 @@ pull:
 # work_pool definition with job_variables
 definitions:
     work-pools:
-        schedule_pool_200: &schedule_pool_200
+      schedule_pool_200: &schedule_pool_200
         name: schedule_pool_200
         work_queue_name: default
         type: docker
@@ -36,9 +36,9 @@ definitions:
 
 flows:
     user_api_workflow:
-        name: user_api_workflow
+      name: user_api_workflow
     parallel_flow:
-        name: parallel_flow
+      name: parallel_flow
 
 # deployment configurations
 deployments:
@@ -53,7 +53,7 @@ deployments:
         active: true
   # infra-specific fields
   work_pool: *schedule_pool_200
-  version: null
+  version:
   tags:
   - schedule-pool-200
   - '200'
@@ -68,7 +68,7 @@ deployments:
         active: true
   # infra-specific fields
   work_pool: *schedule_pool_200
-  version: null
+  version:
   tags:
   - schedule-pool-200
   - '200'

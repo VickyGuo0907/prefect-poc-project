@@ -21,11 +21,11 @@ pull:
 # work_pool definition with job_variables
 definitions:
     work-pools:
-        automation_pool_100: &automation_pool_100
+      automation_pool_100: &automation_pool_100
         name: automation_pool_100
         work_queue_name: default
         type: process
-        # Variables in Jenksins Job configuration
+        # Variables in Jenksins Job or other CI/CD tool configuration
         job_variables:
             env:
                 ENV_NAME: prefect-test-automation-pool-100
@@ -44,7 +44,7 @@ flows:
 deployments:
 - name: user_api_workflow_automation_pool_100
   flow: user_api_workflow
-  entrypoint: flows/user_api_workflow.py:user_api_workflow_test
+  entrypoint: ../flows/user_api_workflow.py:user_api_workflow_test
   description: this tests case would be test user api
   parameters: {}
   automations:
@@ -59,7 +59,7 @@ deployments:
   - '100'
 - name: parallel_flow_automation_pool_100
   flow: parallel_flow
-  entrypoint: flows/parallel_flow.py:workflow_with_parallel_tasks
+  entrypoint: ../flows/parallel_flow.py:workflow_with_parallel_tasks
   description: this tests case would be test user api
   parameters: {}
   automations:
